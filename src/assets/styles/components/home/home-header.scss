@@ -1,0 +1,22 @@
+.home-header {
+  padding-top: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.home-header__logo {
+  display: inline-block;
+  width: 70px;
+  height: 70px;
+  background-image: $earth;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.home-header__title {
+  margin: 0 0 0 20px;
+  display: inline-block;
+  font-size: 80px;
+  line-height: 1.1;
+  color: #F6F6F5;
+}

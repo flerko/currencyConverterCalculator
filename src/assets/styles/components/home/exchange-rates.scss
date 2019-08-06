@@ -1,0 +1,48 @@
+.exchange-rates {
+  position: relative;
+  margin-top: 70px;
+  padding: 27px 25px 51px 21px;
+  background: #F6F6F5;
+  border-radius: 10px;
+}
+
+.exchange-rates__title {
+  margin: 0;
+  font-size: 45px;
+  font-weight: normal;
+  line-height: 1.1;
+  color: #956944;
+}
+
+.exchange-rates__currency-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 73px;
+}
+
+.exchange-rates__currency-block {
+  width: 30%;
+  text-align: center;
+}
+
+.exchange-rates__currency-title {
+  margin: 0;
+  width: 100%;
+  padding: 14px 11px;
+  background: #D7A968;
+  font-size: 30px;
+  font-weight: normal;
+  line-height: 1.1;
+  color: #F6F6F5;
+  border-bottom: 3px solid #666;
+}
+
+.exchange-rates__currency-value {
+  margin: 13px 0 0;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  line-height: 1.1;
+  color: #000;
+}

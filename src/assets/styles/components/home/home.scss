@@ -1,0 +1,14 @@
+.home {
+  background: linear-gradient(180deg, #4A5957 0%, #353D3C 100%);
+  min-height: 100vh;
+  overflow: hidden;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.home-main {
+  width: 80%;
+  margin: 0 auto;
+}
