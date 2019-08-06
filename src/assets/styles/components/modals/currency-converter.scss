@@ -1,0 +1,63 @@
+.currency-converter {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  background: #F6F6F5;
+  border-radius: 10px;
+  padding: 27px 25px 51px 21px;
+}
+
+.currency-converter__title {
+  margin: 0;
+  @include block-title;
+  color: #956944;
+}
+
+.currency-converter__selection-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 73px;
+
+  @media (min-width: $desktopMedia) {
+    flex-direction: row;
+  }
+}
+
+.currency-converter__selection-block {
+  width: 100%;
+
+  &:not(:first-child) {
+    margin-top: 10px;
+  }
+
+  @media (min-width: $desktopMedia) {
+    width: 46%;
+    margin-top: 0;
+  }
+
+  select, input {
+    position: relative;
+    width: 100%;
+    border: 2px solid #434F4D;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 14px 0 14px 38px;
+    font-family: $fontFamily;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 1.1;
+    color: #434E4D;
+  }
+
+  select {
+    margin-top: 15px;
+  }
+
+  option {
+    width: 100%;
+  }
+}

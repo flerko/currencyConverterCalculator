@@ -4,19 +4,20 @@
   margin-top: 95px;
   background: #956944;
   border-radius: 10px;
+
+  * {
+    position: relative;
+    z-index: 2;
+  }
 }
 
 .conversion-history__title {
-  position: relative;
-  z-index: 2;
   margin: 0;
   @include block-title;
   color: #F6F6F5;
 }
 
 .conversion-history__list {
-  position: relative;
-  z-index: 2;
   margin: 40px 0 0;
   padding: 0;
   list-style: none;
@@ -34,8 +35,6 @@
 }
 
 .conversion-history__button {
-  position: relative;
-  z-index: 2;
   display: inline-block;
   margin-top: 34px;
   padding: 11px 15px;
@@ -55,6 +54,7 @@
 
 .conversion-history__business {
   position: absolute;
+  z-index: 1;
   right: 0;
   top: 50%;
   transform: translateY(-50%);
