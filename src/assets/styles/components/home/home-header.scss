@@ -5,7 +5,7 @@
 }
 
 .home-header__logo {
-  display: inline-block;
+  min-width: 70px;
   width: 70px;
   height: 70px;
   background-image: $earth;
@@ -14,9 +14,13 @@
 }
 
 .home-header__title {
+  width: calc(100% - 70px);
   margin: 0 0 0 20px;
-  display: inline-block;
-  font-size: 80px;
+  font-size: 56px;
   line-height: 1.1;
   color: #F6F6F5;
+
+  @media (min-width: $desktopMedia) {
+    font-size: 80px;
+  }
 }

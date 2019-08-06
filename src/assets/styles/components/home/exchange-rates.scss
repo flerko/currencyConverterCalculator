@@ -8,9 +8,7 @@
 
 .exchange-rates__title {
   margin: 0;
-  font-size: 45px;
-  font-weight: normal;
-  line-height: 1.1;
+  @include block-title;
   color: #956944;
 }
 
@@ -18,12 +16,23 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  flex-direction: column;
   margin-top: 73px;
+
+  @media (min-width: $desktopMedia) {
+    flex-direction: row;
+  }
 }
 
 .exchange-rates__currency-block {
-  width: 30%;
+  width: 100%;
   text-align: center;
+  margin-bottom: 20px;
+
+  @media (min-width: $desktopMedia) {
+    width: 30%;
+    margin-bottom: 0;
+  }
 }
 
 .exchange-rates__currency-title {
@@ -31,11 +40,15 @@
   width: 100%;
   padding: 14px 11px;
   background: #D7A968;
-  font-size: 30px;
+  font-size: 22px;
   font-weight: normal;
   line-height: 1.1;
   color: #F6F6F5;
   border-bottom: 3px solid #666;
+
+  @media (min-width: $desktopMedia) {
+    font-size: 30px;
+  }
 }
 
 .exchange-rates__currency-value {
