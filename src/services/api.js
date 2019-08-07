@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import fetch from 'isomorphic-fetch';
+import axios from 'axios';
 
 export default class API {
   constructor(url) {
@@ -13,12 +13,12 @@ export default class API {
       ...params.headers,
     });
 
-    return fetch(this.url + path, params)
+    return axios(this.url + path, params)
       .then(response => {
         if (response.status < 200 || response.status > 300) {
           throw new Error('API error');
         }
-        return response.json();
+        return response.data;
       })
       .catch(error => {
         console.error('API Error', error);
@@ -29,27 +29,6 @@ export default class API {
     return this._request(path, {
       ...params,
       method: 'GET',
-    });
-  }
-
-  post(path, params) {
-    return this._request(path, {
-      ...params,
-      method: 'POST',
-    });
-  }
-
-  put(path, params) {
-    return this._request(path, {
-      ...params,
-      method: 'PUT',
-    });
-  }
-
-  delete(path, params) {
-    return this._request(path, {
-      ...params,
-      method: 'DELETE',
     });
   }
 }
