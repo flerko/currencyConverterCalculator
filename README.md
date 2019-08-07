@@ -24,6 +24,12 @@ npm install || yarn
 
 ## Running project
 
+Run backend server for CORS policy:
+
+```
+npm run node
+```
+
 Run development server with live reload:
 
 ```
