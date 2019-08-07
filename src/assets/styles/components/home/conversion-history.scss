@@ -5,7 +5,7 @@
   background: #956944;
   border-radius: 10px;
 
-  * {
+  .conversion-history__title, .conversion-history__list, .conversion-history__button {
     position: relative;
     z-index: 2;
   }

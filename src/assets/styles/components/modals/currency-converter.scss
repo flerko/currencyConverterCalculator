@@ -1,10 +1,5 @@
 .currency-converter {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 100%;
   background: #F6F6F5;
-  border-radius: 10px;
   padding: 27px 25px 51px 21px;
 }
 
@@ -31,11 +26,14 @@
 
   &:not(:first-child) {
     margin-top: 10px;
+
+    @media (min-width: $desktopMedia) {
+      margin-top: 0;
+    }
   }
 
   @media (min-width: $desktopMedia) {
     width: 46%;
-    margin-top: 0;
   }
 
   select, input {
@@ -51,6 +49,7 @@
     font-size: 30px;
     line-height: 1.1;
     color: #434E4D;
+    outline: none;
   }
 
   select {

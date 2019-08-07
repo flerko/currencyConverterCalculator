@@ -26,7 +26,10 @@ Home.propTypes = {
 const mapDispatchToProps = dispatch => {
   return {
     getDataAction: bindActionCreators(getData, dispatch),
-  }
+  };
 };
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(
+  null,
+  mapDispatchToProps
+)(Home);

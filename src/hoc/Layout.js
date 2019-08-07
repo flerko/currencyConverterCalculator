@@ -5,7 +5,7 @@ import Home from '../containers/home/Home';
 class Layout extends Component {
   render() {
     return (
-      <div className='layout'>
+      <div className="layout">
         <Home />
       </div>
     );

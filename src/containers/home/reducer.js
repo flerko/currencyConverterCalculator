@@ -1,7 +1,7 @@
 import types from './types';
 
 const initialState = {
-  data: {}
+  data: {},
 };
 
 export function homeReducer(state = initialState, action) {
