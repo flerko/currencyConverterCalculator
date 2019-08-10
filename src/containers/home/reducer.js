@@ -1,13 +1,14 @@
 import types from './types';
 
 const initialState = {
-  data: {},
+  currencies: {},
+  necessaryCurrencies: [],
 };
 
 export function homeReducer(state = initialState, action) {
   switch (action.type) {
-    case types.GET_DATA_SUCCESS:
-      return { ...state, data: action.data };
+    case types.GET_CURRENCIES_SUCCESS:
+      return { ...state, currencies: action.currencies, necessaryCurrencies: action.necessaryCurrencies };
     default:
       return state;
   }

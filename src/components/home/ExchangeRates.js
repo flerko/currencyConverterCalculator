@@ -1,27 +1,39 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import get from 'lodash/get';
+import { concatTitle } from '../../utils/index';
 
 class ExchangeRates extends Component {
+  renderCurrenciesBlock = () => {
+    return this.props.necessaryCurrencies.map((currency, index) => {
+      return (
+        <div className="exchange-rates__currency-block" key={index}>
+          <h3 className="exchange-rates__currency-title">{concatTitle(currency)}</h3>
+          <p className="exchange-rates__currency-value">{get(currency, 'Value')}</p>
+        </div>
+      );
+    });
+  };
+
   render() {
     return (
       <div className="exchange-rates">
         <h2 className="exchange-rates__title">Курс валют ЦБ РФ</h2>
-        <div className="exchange-rates__currency-container">
-          <div className="exchange-rates__currency-block">
-            <h3 className="exchange-rates__currency-title">Доллар США, USD</h3>
-            <p className="exchange-rates__currency-value">64.6423</p>
-          </div>
-          <div className="exchange-rates__currency-block">
-            <h3 className="exchange-rates__currency-title">Евро, EUR</h3>
-            <p className="exchange-rates__currency-value">71.7077</p>
-          </div>
-          <div className="exchange-rates__currency-block">
-            <h3 className="exchange-rates__currency-title">Фунт стерлингов, GBP</h3>
-            <p className="exchange-rates__currency-value">78.3982</p>
-          </div>
-        </div>
+        <div className="exchange-rates__currency-container">{this.renderCurrenciesBlock()}</div>
       </div>
     );
   }
 }
 
-export default ExchangeRates;
+ExchangeRates.propTypes = {
+  necessaryCurrencies: PropTypes.array,
+};
+
+const mapStateToProps = state => {
+  return {
+    necessaryCurrencies: state.home.necessaryCurrencies,
+  };
+};
+
+export default connect(mapStateToProps)(ExchangeRates);

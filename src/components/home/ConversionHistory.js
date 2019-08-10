@@ -19,8 +19,8 @@ class ConversionHistory extends Component {
   render() {
     return (
       <div className="conversion-history">
-        <GlobalModal show={this.state.showCurrencyConverter} close={this.closeConverter}>
-          <CurrencyConverter />
+        <GlobalModal close={this.closeConverter}>
+          <CurrencyConverter show={this.state.showCurrencyConverter} />
         </GlobalModal>
         <h2 className="conversion-history__title">История конвертации</h2>
         <ul className="conversion-history__list">

@@ -23,22 +23,22 @@ class GlobalModal extends Component {
 
   closePopup = event => {
     if (this.wrapper && !this.wrapper.contains(event.target)) {
+      if (!this.props.close) return;
       this.props.close();
     }
   };
 
   render() {
-    return this.props.show ? (
+    return (
       <div className="global-modal" ref={this.setWrapperRef}>
         {this.props.children}
       </div>
-    ) : null;
+    );
   }
 }
 
 GlobalModal.propTypes = {
   children: PropTypes.element.isRequired,
-  show: PropTypes.bool,
   close: PropTypes.func,
 };
 
