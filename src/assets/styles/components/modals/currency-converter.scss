@@ -16,25 +16,21 @@
   align-items: flex-start;
   flex-direction: column;
   margin-top: 73px;
-
-  @media (min-width: $desktopMedia) {
-    flex-direction: row;
-  }
 }
 
 .currency-converter__selection-block {
   width: 100%;
-
-  &:not(:first-child) {
-    margin-top: 10px;
-
-    @media (min-width: $desktopMedia) {
-      margin-top: 0;
-    }
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
 
   @media (min-width: $desktopMedia) {
-    width: 46%;
+    flex-direction: row;
+  }
+
+  &:not(:first-child) {
+    margin-top: 15px;
   }
 
   select, input {
@@ -43,18 +39,28 @@
     border: 2px solid #434F4D;
     box-sizing: border-box;
     border-radius: 10px;
-    padding: 14px 0 14px 38px;
+    padding: 7px 0 7px 10px;
     font-family: $fontFamily;
     font-style: normal;
     font-weight: normal;
-    font-size: 30px;
-    line-height: 1.1;
+    font-size: 16px;
+    line-height: 1;
     color: #434E4D;
     outline: none;
+
+    @media (min-width: $desktopMedia) {
+      padding: 14px 0 14px 38px;
+      font-size: 30px;
+      width: 46%;
+    }
   }
 
   select {
-    margin-top: 15px;
+    margin-top: 10px;
+
+    @media (min-width: $desktopMedia) {
+      margin-top: 0;
+    }
   }
 
   option {

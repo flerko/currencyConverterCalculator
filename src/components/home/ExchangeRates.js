@@ -7,11 +7,14 @@ import { concatTitle } from '../../utils/index';
 class ExchangeRates extends Component {
   renderCurrenciesBlock = () => {
     return this.props.necessaryCurrencies.map((currency, index) => {
-      return currency && (
-        <div className="exchange-rates__currency-block" key={index}>
-          <h3 className="exchange-rates__currency-title">{concatTitle(currency)}</h3>
-          <p className="exchange-rates__currency-value">{get(currency, 'Value')}</p>
-        </div>
+      if (get(currency, 'CharCode') === 'RUB') return null;
+      return (
+        currency && (
+          <div className="exchange-rates__currency-block" key={index}>
+            <h3 className="exchange-rates__currency-title">{concatTitle(currency)}</h3>
+            <p className="exchange-rates__currency-value">{get(currency, 'Value')}</p>
+          </div>
+        )
       );
     });
   };

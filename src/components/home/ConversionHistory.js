@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import businessBank from '../../assets/images/home/business-bank-investor.png';
 import CurrencyConverter from '../modals/CurrencyConverter';
 import GlobalModal from '../modals/GlobalModal';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { setConversionStorageFromSessionStorage } from '../../containers/home/actions';
+import { bindActionCreators } from 'redux';
 
 class ConversionHistory extends Component {
   state = {
     showCurrencyConverter: false,
   };
+
+  componentWillMount() {
+    this.props.setConversionStorageFromSessionStorageAction();
+  }
 
   openConverter = () => {
     this.setState({ showCurrencyConverter: true });
@@ -16,6 +24,23 @@ class ConversionHistory extends Component {
     this.setState({ showCurrencyConverter: false });
   };
 
+  renderConversionHistory = () => {
+    const { conversionStorage } = this.props;
+    if (!conversionStorage.length) return null;
+    return <ul className="conversion-history__list">{this.renderConversions()}</ul>;
+  };
+
+  renderConversions = () => {
+    const { conversionStorage } = this.props;
+    return conversionStorage.map((conversion, index) => {
+      return (
+        <li className="conversion-history__item" key={index}>
+          {conversion}
+        </li>
+      );
+    });
+  };
+
   render() {
     return (
       <div className="conversion-history">
@@ -23,12 +48,7 @@ class ConversionHistory extends Component {
           <CurrencyConverter show={this.state.showCurrencyConverter} />
         </GlobalModal>
         <h2 className="conversion-history__title">История конвертации</h2>
-        <ul className="conversion-history__list">
-          <li className="conversion-history__item">220 USD = 14221.3 RUB</li>
-          <li className="conversion-history__item">123 RUB = 1.5689 GBP</li>
-          <li className="conversion-history__item">52 EUR = 57.6836 USD</li>
-          <li className="conversion-history__item">349 GBP = 381.563 EUR</li>
-        </ul>
+        {this.renderConversionHistory()}
         <div className="conversion-history__button" onClick={this.openConverter}>
           Конвертор валют
         </div>
@@ -38,4 +58,24 @@ class ConversionHistory extends Component {
   }
 }
 
-export default ConversionHistory;
+ConversionHistory.propTypes = {
+  conversionStorage: PropTypes.array,
+  setConversionStorageFromSessionStorageAction: PropTypes.func,
+};
+
+const mapStateToProps = state => {
+  return {
+    conversionStorage: state.home.conversionStorage,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setConversionStorageFromSessionStorageAction: bindActionCreators(setConversionStorageFromSessionStorage, dispatch),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConversionHistory);
