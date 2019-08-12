@@ -1,87 +1,101 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import SelectCurrency from '../home/SelectCurrency';
-import debounce from 'lodash/debounce';
-import get from 'lodash/get';
 import { setConversionStorage } from '../../containers/home/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import find from 'lodash/find';
+import get from "lodash/get";
+import {concatTitle} from "../../utils";
 
 class CurrencyConverter extends Component {
   constructor() {
     super();
     this.state = {
-      firstCurrency: { Value: 0 },
-      secondCurrency: { Value: 0 },
-      firstValue: 0,
-      secondValue: 0,
+      currencies: [],
+      converters: [],
     };
-    this.firstDebounce = debounce(() => {
-      this.computedSecondValue();
-    }, 250);
-    this.secondDebounce = debounce(() => {
-      this.computedFirstValue();
-    }, 250);
   }
 
-  setFirstCurrency = currency => {
-    this.setState({ firstCurrency: currency });
+  componentDidUpdate(prevProps) {
+    if (prevProps.necessaryCurrencies !== this.props.necessaryCurrencies) {
+      const neededCurrencies = ['RUB', 'USD'];
+      let currencies = [];
+
+      neededCurrencies.map(item => {
+        const currency = find(this.props.necessaryCurrencies, { CharCode: item });
+        if (currency) currencies.push(currency.CharCode);
+      });
+
+      const converters = currencies.map((currency) => ({
+        value: 0,
+        currency
+      }));
+      this.setState({currencies, converters});
+    }
   };
 
-  changeFirstCurrency = currency => {
-    this.setState({ firstCurrency: JSON.parse(currency) }, () => {
-      this.computedFirstValue();
+  renderConverters = () => {
+    return this.state.converters.map((converter, index) => {
+      return (
+        <div className="currency-converter__selection-block" key={index}>
+          <input
+            type="number"
+            placeholder="Enter number please"
+            value={converter.value}
+            onChange={(event) => this.changeConverterField(index, 'value', Number(event.target.value))}
+          />
+          <select
+            onChange={(event) => this.changeConverterField(index, 'currency', event.target.value)}
+            value={converter.currency}>
+            {this.renderOptions(converter)}
+          </select>
+        </div>
+      );
     });
   };
 
-  changeFirstValueCurrency = event => {
-    this.setState({ firstValue: event.target.value }, () => {
-      this.firstDebounce();
+  renderOptions = (converter) => {
+    const selectableCurrencies = this.props.necessaryCurrencies.filter((currency) => {
+      return !find(this.state.converters, { currency: currency.CharCode }) ||
+        currency.CharCode === converter.currency;
+    });
+
+    return selectableCurrencies.map((currency, index) => {
+      return (
+        <option key={index} value={get(currency, 'CharCode')}>
+          {concatTitle(currency)}
+        </option>
+      );
     });
   };
 
-  computedFirstValue = () => {
-    const { firstCurrency, secondCurrency, secondValue } = this.state;
-    const firstCurrencyValue = get(firstCurrency, 'Value');
-    const secondCurrencyValue = get(secondCurrency, 'Value');
-    const firstValue = (secondValue * secondCurrencyValue) / firstCurrencyValue;
-    this.setState({ firstValue }, () => {
-      this.setLastConversionToStorage();
+  changeConverterField = (index, name, value) => {
+    const converters = [...this.state.converters];
+    converters[index] = {...converters[index], [name]: value};
+    this.setState({converters}, () => this.convertValues(index));
+  };
+
+  convertValues = (index) => {
+    const {necessaryCurrencies} = this.props;
+
+    const converter = this.state.converters[index];
+    const value = converter.value;
+    const changedCurrency = find(necessaryCurrencies, {CharCode: converter.currency});
+
+    const converters = this.state.converters.map((item, itemIndex) => {
+      if (index === itemIndex) return item;
+
+      const currency = find(necessaryCurrencies, { CharCode: item.currency });
+      const newValue = (changedCurrency.Value / currency.Value) * value;
+      this.setLastConversionToStorage(currency, changedCurrency, value, newValue);
+
+      return {...item, value: newValue };
     });
+    this.setState({converters});
   };
 
-  setSecondCurrency = currency => {
-    this.setState({ secondCurrency: currency });
-  };
-
-  changeSecondCurrency = currency => {
-    this.setState({ secondCurrency: JSON.parse(currency) }, () => {
-      this.computedSecondValue();
-    });
-  };
-
-  changeSecondValueCurrency = event => {
-    this.setState({ secondValue: event.target.value }, () => {
-      this.secondDebounce();
-    });
-  };
-
-  computedSecondValue = () => {
-    const { firstCurrency, secondCurrency, firstValue } = this.state;
-    const firstCurrencyValue = get(firstCurrency, 'Value');
-    const secondCurrencyValue = get(secondCurrency, 'Value');
-    const secondValue = (firstValue * firstCurrencyValue) / secondCurrencyValue;
-    this.setState({ secondValue }, () => {
-      this.setLastConversionToStorage();
-    });
-  };
-
-  setLastConversionToStorage = () => {
-    const { firstCurrency, secondCurrency, firstValue, secondValue } = this.state;
-    const firstCurrencyCharCode = get(firstCurrency, 'CharCode');
-    const secondCurrencyCharCode = get(secondCurrency, 'CharCode');
-    if (firstCurrencyCharCode === secondCurrencyCharCode) return null;
-    const lastConversion = `${firstValue} ${firstCurrencyCharCode} = ${secondValue} ${secondCurrencyCharCode}`;
+  setLastConversionToStorage = (currency, changedCurrency, value, newValue) => {
+    const lastConversion = `${changedCurrency.Value * value} ${changedCurrency.CharCode} = ${newValue} ${currency.CharCode}`;
     this.props.setConversionStorageAction(lastConversion);
   };
 
@@ -90,24 +104,7 @@ class CurrencyConverter extends Component {
       <div className="currency-converter">
         <h2 className="currency-converter__title">Конвертер валют</h2>
         <div className="currency-converter__selection-container">
-          <div className="currency-converter__selection-block">
-            <input
-              type="number"
-              placeholder="Enter number please"
-              onChange={this.changeFirstValueCurrency}
-              value={this.state.firstValue}
-            />
-            <SelectCurrency setDefaultCurrency={this.setFirstCurrency} changeCurrency={this.changeFirstCurrency} />
-          </div>
-          <div className="currency-converter__selection-block">
-            <input
-              type="number"
-              placeholder="Enter number please"
-              onChange={this.changeSecondValueCurrency}
-              value={this.state.secondValue}
-            />
-            <SelectCurrency setDefaultCurrency={this.setSecondCurrency} changeCurrency={this.changeSecondCurrency} />
-          </div>
+          {this.renderConverters()}
         </div>
       </div>
     ) : null;
@@ -117,6 +114,13 @@ class CurrencyConverter extends Component {
 CurrencyConverter.propTypes = {
   show: PropTypes.bool,
   setConversionStorageAction: PropTypes.func,
+  necessaryCurrencies: PropTypes.array,
+};
+
+const mapStateToProps = state => {
+  return {
+    necessaryCurrencies: state.home.necessaryCurrencies,
+  };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -126,6 +130,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CurrencyConverter);

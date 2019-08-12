@@ -39,7 +39,7 @@ export function setConversionStorage(lastConversion) {
 }
 
 export function setConversionStorageFromSessionStorage() {
-  const conversionStorage = JSON.parse(sessionStorage.getItem('conversionStorage'));
+  const conversionStorage = JSON.parse(sessionStorage.getItem('conversionStorage')) || [];
   return dispatch => {
     dispatch({
       type: types.SET_CONVERSION_STORAGE_FROM_SESSION_STORAGE,
