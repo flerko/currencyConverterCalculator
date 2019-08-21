@@ -7,6 +7,7 @@ import Home from './containers/home/Home';
 import 'babel-polyfill';
 import Layout from './hoc/Layout';
 import { store } from './store/configureStore';
+import './layout.css';
 
 const history = createBrowserHistory();
 

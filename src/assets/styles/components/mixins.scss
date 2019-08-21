@@ -1,9 +1,0 @@
-@mixin block-title {
-  font-size: 30px;
-  font-weight: normal;
-  line-height: 1.1;
-
-  @media (min-width: $desktopMedia) {
-    font-size: 45px;
-  }
-}

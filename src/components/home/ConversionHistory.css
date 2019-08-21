@@ -1,40 +1,41 @@
-.conversion-history {
+.main {
   position: relative;
   padding: 27px 25px 51px 21px;
   margin-top: 95px;
   background: #956944;
   border-radius: 10px;
-
-  .conversion-history__title, .conversion-history__list, .conversion-history__button {
-    position: relative;
-    z-index: 2;
-  }
+  box-sizing: border-box;
 }
 
-.conversion-history__title {
+.title {
+  font-family: var(--font-family);
+  font-size: 30px;
+  font-weight: normal;
+  line-height: 1.1;
+  position: relative;
+  z-index: 2;
   margin: 0;
-  @include block-title;
   color: #F6F6F5;
 }
 
-.conversion-history__list {
+.list {
+  position: relative;
+  z-index: 2;
   margin: 40px 0 0;
   padding: 0;
   list-style: none;
 }
 
-.conversion-history__item {
+.item {
   font-weight: normal;
   font-size: 22px;
   line-height: 1.1;
   color: #F6F6F5;
-
-  @media (min-width: $desktopMedia) {
-    font-size: 30px;
-  }
 }
 
-.conversion-history__button {
+.button {
+  position: relative;
+  z-index: 2;
   display: inline-block;
   margin-top: 34px;
   padding: 10px 10px;
@@ -45,14 +46,10 @@
   font-size: 22px;
   line-height: 1.1;
   color: #817D6C;
-
-  @media (min-width: $desktopMedia) {
-    font-size: 30px;
-    padding: 11px 59px;
-  }
+  box-sizing: border-box;
 }
 
-.conversion-history__business {
+.business {
   position: absolute;
   z-index: 1;
   right: 0;
@@ -60,4 +57,19 @@
   transform: translateY(-50%);
   width: 60%;
   max-height: 800px;
+}
+
+@media (min-width: 854px) {
+  .title {
+    font-size: 45px;
+  }
+
+  .item {
+    font-size: 30px;
+  }
+
+  .button {
+    font-size: 30px;
+    padding: 11px 59px;
+  }
 }

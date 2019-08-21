@@ -1,0 +1,25 @@
+.select {
+  position: relative;
+  width: 100%;
+  border: 2px solid #434F4D;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 7px 0 7px 10px;
+  font-family: var(--font-family);
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 1;
+  color: #434E4D;
+  outline: none;
+  margin-top: 10px;
+}
+
+@media (min-width: 854px) {
+  .select {
+    padding: 14px 0 14px 38px;
+    font-size: 30px;
+    width: 46%;
+    margin-top: 0;
+  }
+}

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setConversionStorageFromSessionStorage } from '../../containers/home/actions';
 import { bindActionCreators } from 'redux';
+import styles from './ConversionHistory.css';
 
 class ConversionHistory extends Component {
   state = {
@@ -27,14 +28,14 @@ class ConversionHistory extends Component {
   renderConversionHistory = () => {
     const { conversionStorage } = this.props;
     if (!conversionStorage.length) return null;
-    return <ul className="conversion-history__list">{this.renderConversions()}</ul>;
+    return <ul className={styles.list}>{this.renderConversions()}</ul>;
   };
 
   renderConversions = () => {
     const { conversionStorage } = this.props;
     return conversionStorage.map((conversion, index) => {
       return (
-        <li className="conversion-history__item" key={index}>
+        <li className={styles.item} key={index}>
           {conversion}
         </li>
       );
@@ -43,16 +44,16 @@ class ConversionHistory extends Component {
 
   render() {
     return (
-      <div className="conversion-history">
+      <div className={styles.main}>
         <GlobalModal close={this.closeConverter}>
           <CurrencyConverter show={this.state.showCurrencyConverter} />
         </GlobalModal>
-        <h2 className="conversion-history__title">История конвертации</h2>
+        <h2 className={styles.title}>История конвертации</h2>
         {this.renderConversionHistory()}
-        <div className="conversion-history__button" onClick={this.openConverter}>
+        <div className={styles.button} onClick={this.openConverter}>
           Конвертор валют
         </div>
-        <img className="conversion-history__business" src={businessBank} alt="businessman" />
+        <img className={styles.business} src={businessBank} alt="businessman" />
       </div>
     );
   }

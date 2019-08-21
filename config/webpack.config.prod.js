@@ -59,7 +59,7 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs, paths.scssPath],
+  entry: [require.resolve('./polyfills'), paths.appIndexJs],
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -163,13 +163,16 @@ module.exports = {
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
           {
-            test: /\.(sc|c)ss$/,
+            test: /\.css$/,
             use: [
               require.resolve('style-loader'),
               {
                 loader: require.resolve('css-loader'),
                 options: {
                   importLoaders: 1,
+                  modules: {
+                    localIdentName: '[name]__[local]___[hash:base64:5]',
+                  },
                 },
               },
               {
@@ -180,13 +183,11 @@ module.exports = {
                   ident: 'postcss',
                   plugins: () => [
                     require('postcss-flexbugs-fixes'),
-                    autoprefixer({
-                      flexbox: 'no-2009',
-                    }),
+                    autoprefixer(),
+                    require('postcss-modules-values'),
                   ],
                 },
               },
-              require.resolve('sass-loader'),
             ],
           },
           // "file" loader makes sure assets end up in the `build` folder.

@@ -4,6 +4,7 @@ import { getCurrenciesData } from '../../containers/home/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import styles from './Home.css';
 
 class Home extends Component {
   componentWillMount() {
@@ -12,7 +13,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="home">
+      <div className={styles.main}>
         <Main />
       </div>
     );

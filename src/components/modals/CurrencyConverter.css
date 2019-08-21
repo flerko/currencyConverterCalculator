@@ -1,0 +1,59 @@
+.main {
+  background: #F6F6F5;
+  padding: 27px 25px 51px 21px;
+  box-shadow: 0 0 9999px 9999px rgba(0,0,0, 0.7);
+  box-sizing: border-box;
+}
+
+.title {
+  font-family: var(--font-family);
+  font-size: 30px;
+  font-weight: normal;
+  line-height: 1.1;
+  margin: 0;
+  color: #956944;
+}
+
+.selectionContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 73px;
+}
+
+.selectionBlock {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.selectionBlock:not(:first-child) {
+  margin-top: 15px;
+}
+
+.option {
+  width: 100%;
+}
+
+@media (min-width: 854px) {
+  .title {
+    font-size: 45px;
+  }
+
+  .selectionBlock {
+    flex-direction: row;
+  }
+
+  .select {
+    padding: 14px 0 14px 38px;
+    font-size: 30px;
+    width: 46%;
+  }
+
+  .select {
+    margin-top: 0;
+  }
+}

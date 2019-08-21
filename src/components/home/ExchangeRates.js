@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { concatTitle } from '../../utils/index';
+import styles from './ExchangeRates.css';
 
 class ExchangeRates extends Component {
   renderCurrenciesBlock = () => {
@@ -10,9 +11,9 @@ class ExchangeRates extends Component {
       if (get(currency, 'CharCode') === 'RUB') return null;
       return (
         currency && (
-          <div className="exchange-rates__currency-block" key={index}>
-            <h3 className="exchange-rates__currency-title">{concatTitle(currency)}</h3>
-            <p className="exchange-rates__currency-value">{get(currency, 'Value')}</p>
+          <div className={styles.currencyBlock} key={index}>
+            <h3 className={styles.currencyTitle}>{concatTitle(currency)}</h3>
+            <p className={styles.currencyValue}>{get(currency, 'Value')}</p>
           </div>
         )
       );
@@ -21,9 +22,9 @@ class ExchangeRates extends Component {
 
   render() {
     return (
-      <div className="exchange-rates">
-        <h2 className="exchange-rates__title">Курс валют ЦБ РФ</h2>
-        <div className="exchange-rates__currency-container">{this.renderCurrenciesBlock()}</div>
+      <div className={styles.main}>
+        <h2 className={styles.title}>Курс валют ЦБ РФ</h2>
+        <div className={styles.currencyContainer}>{this.renderCurrenciesBlock()}</div>
       </div>
     );
   }

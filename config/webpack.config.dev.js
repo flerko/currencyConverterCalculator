@@ -51,7 +51,6 @@ module.exports = {
     require.resolve('react-dev-utils/webpackHotDevClient'),
     // Finally, this is your app's code:
     paths.appIndexJs,
-    paths.scssPath,
     // We include the app code last so that if there is a runtime error during
     // initialization, it doesn't blow up the WebpackDevServer client, and
     // changing JS code would still trigger a refresh.
@@ -157,13 +156,16 @@ module.exports = {
           // In production, we use a plugin to extract that CSS to a file, but
           // in development "style" loader enables hot editing of CSS.
           {
-            test: /\.(sc|c)ss$/,
+            test: /\.css$/,
             use: [
               require.resolve('style-loader'),
               {
                 loader: require.resolve('css-loader'),
                 options: {
                   importLoaders: 1,
+                  modules: {
+                    localIdentName: '[name]__[local]___[hash:base64:5]',
+                  },
                 },
               },
               {
@@ -174,13 +176,11 @@ module.exports = {
                   ident: 'postcss',
                   plugins: () => [
                     require('postcss-flexbugs-fixes'),
-                    autoprefixer({
-                      flexbox: 'no-2009',
-                    }),
+                    autoprefixer(),
+                    require('postcss-modules-values'),
                   ],
                 },
               },
-              require.resolve('sass-loader'),
             ],
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.

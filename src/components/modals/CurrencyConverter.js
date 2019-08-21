@@ -4,8 +4,11 @@ import { setConversionStorage } from '../../containers/home/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import find from 'lodash/find';
-import get from "lodash/get";
+import Input from '../common/Input';
+import Select from '../common/Select';
+import styles from './CurrencyConverter.css';
 import {concatTitle} from "../../utils";
+import get from "lodash/get";
 
 class CurrencyConverter extends Component {
   constructor() {
@@ -18,7 +21,7 @@ class CurrencyConverter extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.necessaryCurrencies !== this.props.necessaryCurrencies) {
-      const neededCurrencies = ['RUB', 'USD'];
+      const neededCurrencies = ['RUB', 'USD', 'GBP'];
       let currencies = [];
 
       neededCurrencies.map(item => {
@@ -37,18 +40,19 @@ class CurrencyConverter extends Component {
   renderConverters = () => {
     return this.state.converters.map((converter, index) => {
       return (
-        <div className="currency-converter__selection-block" key={index}>
-          <input
-            type="number"
-            placeholder="Enter number please"
+        <div className={styles.selectionBlock} key={index}>
+          <Input
+            index={index}
             value={converter.value}
-            onChange={(event) => this.changeConverterField(index, 'value', Number(event.target.value))}
+            change={this.changeConverterField}
           />
-          <select
-            onChange={(event) => this.changeConverterField(index, 'currency', event.target.value)}
-            value={converter.currency}>
-            {this.renderOptions(converter)}
-          </select>
+          <Select
+            index={index}
+            value={converter.currency}
+            change={this.changeConverterField}
+            converter={converter}
+            renderOptions={this.renderOptions}
+          />
         </div>
       );
     });
@@ -62,7 +66,7 @@ class CurrencyConverter extends Component {
 
     return selectableCurrencies.map((currency, index) => {
       return (
-        <option key={index} value={get(currency, 'CharCode')}>
+        <option className={styles.option} key={index} value={get(currency, 'CharCode')}>
           {concatTitle(currency)}
         </option>
       );
@@ -87,23 +91,24 @@ class CurrencyConverter extends Component {
 
       const currency = find(necessaryCurrencies, { CharCode: item.currency });
       const newValue = (changedCurrency.Value / currency.Value) * value;
-      this.setLastConversionToStorage(currency, changedCurrency, value, newValue);
 
+      this.setLastConversionToStorage(currency, index, newValue);
       return {...item, value: newValue };
     });
     this.setState({converters});
   };
 
-  setLastConversionToStorage = (currency, changedCurrency, value, newValue) => {
-    const lastConversion = `${changedCurrency.Value * value} ${changedCurrency.CharCode} = ${newValue} ${currency.CharCode}`;
+  setLastConversionToStorage = (currency, index, newValue) => {
+    const currentCurrency = this.state.converters[index];
+    const lastConversion = `${currentCurrency.value} ${currentCurrency.currency} = ${newValue} ${currency.CharCode}`;
     this.props.setConversionStorageAction(lastConversion);
   };
 
   render() {
     return this.props.show ? (
-      <div className="currency-converter">
-        <h2 className="currency-converter__title">Конвертер валют</h2>
-        <div className="currency-converter__selection-container">
+      <div className={styles.main}>
+        <h2 className={styles.title}>Конвертер валют</h2>
+        <div className={styles.selectionContainer}>
           {this.renderConverters()}
         </div>
       </div>

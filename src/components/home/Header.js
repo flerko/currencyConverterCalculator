@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import styles from './Header.css';
 
 class Header extends Component {
   render() {
     return (
-      <div className="home-header">
-        <div className="home-header__logo" />
-        <h1 className="home-header__title">Курс валют</h1>
+      <div className={styles.main}>
+        <div className={styles.logo} />
+        <h1 className={styles.title}>Курс валют</h1>
       </div>
     );
   }

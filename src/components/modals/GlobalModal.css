@@ -1,0 +1,9 @@
+.main {
+  position: fixed;
+  margin-left: -21px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 80%;
+  z-index: 3;
+  border-radius: 10px;
+}

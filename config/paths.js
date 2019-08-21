@@ -49,6 +49,5 @@ module.exports = {
   testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
-  servedPath: getServedPath(resolveApp('package.json')),
-  scssPath: resolveApp('src/assets/styles/app.scss'),
+  servedPath: getServedPath(resolveApp('package.json'))
 };

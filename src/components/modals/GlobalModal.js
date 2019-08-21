@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styles from './GlobalModal.css';
 
 class GlobalModal extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class GlobalModal extends Component {
 
   render() {
     return (
-      <div className="global-modal" ref={this.setWrapperRef}>
+      <div className={styles.main} ref={this.setWrapperRef}>
         {this.props.children}
       </div>
     );

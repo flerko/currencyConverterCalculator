@@ -1,26 +1,32 @@
-.home-header {
+:root {
+
+}
+
+.main {
   padding-top: 60px;
   display: flex;
   align-items: center;
 }
 
-.home-header__logo {
+.logo {
   min-width: 70px;
   width: 70px;
   height: 70px;
-  background-image: $earth;
+  background-image: var(--earth);
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.home-header__title {
+.title {
   width: calc(100% - 70px);
   margin: 0 0 0 20px;
   font-size: 56px;
   line-height: 1.1;
   color: #F6F6F5;
+}
 
-  @media (min-width: $desktopMedia) {
+@media (min-width: 854px) {
+  .title {
     font-size: 80px;
   }
 }
